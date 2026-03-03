@@ -46,18 +46,13 @@ if model and encoder:
         submit = st.form_submit_button("Analyze Sample")
 
     if submit:
-        # THE CRITICAL FIX: Mapping user inputs to 'Diode' names for the model
-        feature_names = [
-            'Diode 1', 'Diode 2', 'Diode 3', 'Diode 4', 
-            'Diode 5', 'Diode 6', 'Diode 7', 'Diode 8'
-        ]
-        
-        # Build the DataFrame the model expects
-        input_df = pd.DataFrame([[v1, v2, v3, v4, v5, v6, v7, v8]], columns=feature_names)
+        # THE FIX: Use NumPy array instead of DataFrame to bypass column name validation
+        # This works regardless of what names were used during training
+        input_data = np.array([[v1, v2, v3, v4, v5, v6, v7, v8]])
         
         try:
-            # Perform Prediction
-            prediction = model.predict(input_df)
+            # Perform Prediction (raw NumPy array - no metadata)
+            prediction = model.predict(input_data)
             result = encoder.inverse_transform(prediction)[0]
             
             # Display Results
