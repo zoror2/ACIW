@@ -36,19 +36,20 @@ if model and encoder:
             v2 = st.number_input("Sensor 2 (Blue - 435nm)", value=0.0, format="%.2f")
             v3 = st.number_input("Sensor 3 (Blue - 460nm)", value=0.0, format="%.2f")
             v4 = st.number_input("Sensor 4 (Cyan - 485nm)", value=0.0, format="%.2f")
+            v5 = st.number_input("Sensor 5 (Green - 510nm)", value=0.0, format="%.2f")
             
         with col2:
-            v5 = st.number_input("Sensor 5 (Green - 510nm)", value=0.0, format="%.2f")
             v6 = st.number_input("Sensor 6 (Green - 535nm)", value=0.0, format="%.2f")
             v7 = st.number_input("Sensor 7 (Yellow - 560nm)", value=0.0, format="%.2f")
             v8 = st.number_input("Sensor 8 (Yellow - 585nm)", value=0.0, format="%.2f")
+            v9 = st.number_input("Sensor 9 (Orange - 610nm)", value=0.0, format="%.2f")
         
         submit = st.form_submit_button("Analyze Sample")
 
     if submit:
         # THE FIX: Use NumPy array instead of DataFrame to bypass column name validation
         # This works regardless of what names were used during training
-        input_data = np.array([[v1, v2, v3, v4, v5, v6, v7, v8]])
+        input_data = np.array([[v1, v2, v3, v4, v5, v6, v7, v8, v9]])
         
         try:
             # Perform Prediction (raw NumPy array - no metadata)
@@ -66,7 +67,7 @@ if model and encoder:
                 
         except Exception as e:
             st.error(f"Prediction Error: {e}")
-            st.info("Note: Ensure your model was trained on exactly 8 sensors.")
+            st.info("Note: Ensure your model was trained on exactly 9 sensors.")
 
 else:
     st.warning("Model files not found. Please ensure 'milk_random_forest_model.pkl' and 'label_encoder.pkl' are in your GitHub repo.")
